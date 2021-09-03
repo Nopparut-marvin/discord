@@ -1,0 +1,34 @@
+{
+	"name": "osm_bot",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "babel . -d dist/ "
+	},
+	"dependencies": {
+		"@discord-player/downloader": "^3.0.1",
+		"@discord-player/extractor": "^3.0.2",
+		"@discordjs/opus": "^0.6.0",
+		"@discordjs/rest": "0.1.0-canary.0",
+		"body-parser": "^1.19.0",
+		"cors": "^2.8.5",
+		"discord-api-types": "^0.22.0",
+		"discord-player": "^5.1.0",
+		"discord.js": "^13.1.0",
+		"dotenv": "^10.0.0",
+		"ejs": "^3.1.6",
+		"express": "^4.17.1",
+		"ffmpeg": "^0.0.4",
+		"ffmpeg-static": "^4.4.0",
+		"opusscript": "0.0.8",
+		"slash-create": "^4.0.1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"babel-cli": "^6.26.0"
+	}
+}

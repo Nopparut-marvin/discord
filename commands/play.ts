@@ -1,4 +1,6 @@
+import { hyperlink, inlineCode } from "@discordjs/builders";
 import { QueryType } from "discord-player";
+import { MessageEmbed } from "discord.js";
 import { ICommand } from "wokcommands";
 import player from "../config/player";
 
@@ -52,20 +54,31 @@ export default {
 		searchResult.playlist
 			? queue.addTracks(searchResult.tracks)
 			: queue.addTrack(searchResult.tracks[0]);
+		const ebmded = new MessageEmbed()
+			.setColor(0xca75eb)
+			.setAuthor(
+				"[ BOT ] เพิ่มเพลงเข้าคิว",
+				queue.tracks[0].requestedBy.displayAvatarURL()
+			);
 		if (!queue.playing) await queue.play();
-		return `⏱ | ผลลัพธ์การค้นหา ${
-			searchResult.playlist
-				? searchResult.tracks
-						.map(
-							(e: any, idx: number) =>
-								"\n`" +
-								(idx + 1).toString() +
-								"` " +
-								`[${e.title}](${e.url})`
-						)
-						.join("")
-				: `[${searchResult.tracks[0].title}](${searchResult.tracks[0].url})`
-		} `;
+		const reply = searchResult.playlist
+			? searchResult.tracks
+					.map(
+						(e: any, idx: number) =>
+							"\n" +
+							inlineCode((idx + 1).toString()) +
+							" " +
+							hyperlink(e.title, e.url)
+					)
+					.join("")
+			: hyperlink(
+					searchResult.tracks[0].title,
+					searchResult.tracks[0].url
+			  );
+
+		ebmded.setDescription(reply);
+
+		return ebmded;
 
 		// Alternatively we can just simply return our text
 		// WOKCommands will handle the proper way to reply with it

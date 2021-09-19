@@ -1,3 +1,4 @@
+import { inlineCode } from "@discordjs/builders";
 import { MessageEmbed } from "discord.js";
 import { ICommand } from "wokcommands";
 import player from "../config/player";
@@ -21,7 +22,7 @@ export default {
 		const text = queue.tracks
 			.map(
 				(e, idx) =>
-					"`" + (idx + 1).toString() + "`" + ` [${e.title}](${e.url})`
+					inlineCode((idx + 1).toString()) + ` [${e.title}](${e.url})`
 			)
 			.join("\n");
 

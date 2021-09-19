@@ -14,6 +14,7 @@ client.once("ready", () => {
 	console.log(
 		`\nLogged in as ${client?.user?.username}. Ready on ${client?.guilds?.cache?.size} servers, for a total of ${client?.users?.cache?.size} users`
 	);
+	client?.user?.setActivity("OSM Bot", { type: "LISTENING" });
 	new WOKCommands(client, {
 		// The name of the local folder for your command files
 		commandsDir: path.join(__dirname, "commands"),

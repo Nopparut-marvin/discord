@@ -1,3 +1,4 @@
+import { hyperlink } from "@discordjs/builders";
 import { Player } from "discord-player";
 import { client } from "../index";
 const discord = new Player(client, {
@@ -5,7 +6,7 @@ const discord = new Player(client, {
 	ytdlOptions: {
 		highWaterMark: 1 << 25,
 	},
-	connectionTimeout: 20000,
+	connectionTimeout: 2 * 60 * 1000,
 });
 
 discord.on("trackStart", (queue: any, track: any) => {
@@ -18,7 +19,7 @@ discord.on("trackStart", (queue: any, track: any) => {
 					icon_url:
 						"https://cdn1.iconfinder.com/data/icons/social-messaging-ui-color-round-2/254000/91-512.png",
 				},
-				description: ` [${track.title}](${track.url})`,
+				description: hyperlink(track.title, track.url),
 				thumbnail: {
 					url: track.thumbnail,
 				},

@@ -6,8 +6,9 @@ const discord = new Player(client, {
 	ytdlOptions: {
 		highWaterMark: 1 << 25,
 	},
-	connectionTimeout: 2 * 60 * 1000,
-});
+	leaveOnEmptyCooldown: 10 * 60 * 1000,
+	connectionTimeout: 60 * 1000,
+} as any);
 
 discord.on("trackStart", (queue: any, track: any) => {
 	return queue.metadata.channel.send({

@@ -14,6 +14,7 @@ var config = {
         queue: ":bar_chart:",
         music: ":musical_note:",
         success: ":white_check_mark:",
+        undeaf: ":undeaf:",
     },
     discord: {
         token: process.env.DISCORD_TOKEN,
@@ -25,6 +26,9 @@ var config = {
     },
     bot: {
         timeout: 10 * 60 * 1000,
+        inviteLink: "https://discord.com/api/oauth2/authorize?client_id=805856620026265610&permissions=0&scope=bot%20applications.commands",
+        type: "LISTENING",
+        status: "OSM Bot",
     },
 };
 exports.default = config;

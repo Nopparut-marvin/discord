@@ -38,7 +38,7 @@ exports.client = client;
 client.once("ready", function () {
     var _a, _b, _c, _d, _e, _f;
     console.log("\nLogged in as " + ((_a = client === null || client === void 0 ? void 0 : client.user) === null || _a === void 0 ? void 0 : _a.username) + ". Ready on " + ((_c = (_b = client === null || client === void 0 ? void 0 : client.guilds) === null || _b === void 0 ? void 0 : _b.cache) === null || _c === void 0 ? void 0 : _c.size) + " servers, for a total of " + ((_e = (_d = client === null || client === void 0 ? void 0 : client.users) === null || _d === void 0 ? void 0 : _d.cache) === null || _e === void 0 ? void 0 : _e.size) + " users");
-    (_f = client === null || client === void 0 ? void 0 : client.user) === null || _f === void 0 ? void 0 : _f.setActivity("OSM Bot", { type: "LISTENING" });
+    (_f = client === null || client === void 0 ? void 0 : client.user) === null || _f === void 0 ? void 0 : _f.setActivity(bot_1.default.bot.status, { type: bot_1.default.bot.type });
     new wokcommands_1.default(client, {
         // The name of the local folder for your command files
         commandsDir: path_1.default.join(__dirname, "commands"),

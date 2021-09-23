@@ -26,7 +26,7 @@ var config = {
     },
     bot: {
         timeout: 10 * 60 * 1000,
-        inviteLink: "https://discord.com/api/oauth2/authorize?client_id=805856620026265610&permissions=0&scope=bot%20applications.commands",
+        inviteLink: "https://discord.com/api/oauth2/authorize?client_id=805856620026265610&permissions=8&scope=applications.commands%20bot",
         type: "LISTENING",
         status: "OSM Bot",
     },

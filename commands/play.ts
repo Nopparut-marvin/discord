@@ -2,6 +2,7 @@ import { hyperlink, inlineCode } from "@discordjs/builders";
 import { QueryType } from "discord-player";
 import { MessageEmbed } from "discord.js";
 import { ICommand } from "wokcommands";
+import config from "../config/bot";
 import player from "../config/player";
 
 export default {
@@ -12,7 +13,7 @@ export default {
 	expectedArgs: "<query>",
 	slash: "both", // Create both a slash and legacy command
 
-	callback: async ({ message, interaction, args }) => {
+	callback: async ({ message, interaction, args, channel }) => {
 		const query = args.join(" ");
 
 		const target = (message ? message : interaction) as any;
@@ -21,22 +22,24 @@ export default {
 			.search(query, {
 				requestedBy: (message?.author
 					? message.author
-					: interaction.member) as any,
+					: interaction.user) as any,
 				searchEngine: QueryType.AUTO,
 			})
 			.catch(() => {
 				console.log("Doesn't found track!");
 			})) as any;
 
-		console.log(searchResult);
-
+		if (!searchResult || !searchResult.tracks.length)
+			return "❌ | Doesn't found track!";
 		//-------------------------------------------------------------------------//
 		// TODO : Create Queue
 		//-------------------------------------------------------------------------//
-		let queue = player.createQueue(target.guild || target.member.guild, {
+		let queue = player.createQueue(channel.guild, {
 			metadata: {
-				channel: target.channel,
+				channel,
 			},
+			leaveOnEmptyCooldown: config.bot.timeout,
+			leaveOnEnd: false,
 		});
 
 		//-------------------------------------------------------------------------//
@@ -47,10 +50,7 @@ export default {
 				await queue?.connect((target as any).member.voice.channel);
 		} catch {
 			queue.destroy();
-			return await target.reply({
-				content: "Could not join your voice channel!",
-				ephemeral: true,
-			});
+			return "❌ | Could not join your voice channel!";
 		}
 
 		searchResult.playlist
@@ -60,7 +60,7 @@ export default {
 			.setColor(0xca75eb)
 			.setAuthor(
 				"[ BOT ] เพิ่มเพลงเข้าคิว",
-				queue.tracks[0].requestedBy.displayAvatarURL()
+				searchResult?.tracks[0].requestedBy.displayAvatarURL()
 			);
 		if (!queue.playing) await queue.play();
 		const reply = searchResult.playlist

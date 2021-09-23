@@ -11,13 +11,15 @@ const config = {
 		success: ":white_check_mark:",
 	},
 	discord: {
-		token: process.env.DISCORD_TOKEN || "",
-		client_id: process.env.DISCORD_CLIENT_ID || "",
+		token: process.env.DISCORD_TOKEN as string,
 		prefix: process.env.PREFIX || "-",
 		activity: process.env.PREFIX + "play to play a song!",
 	},
 	mongo: {
 		monroUri: process.env.MONGO_URI as string,
+	},
+	bot: {
+		timeout: 10 * 60 * 1000,
 	},
 };
 

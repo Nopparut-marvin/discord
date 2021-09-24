@@ -7,6 +7,7 @@ var builders_1 = require("@discordjs/builders");
 var discord_player_1 = require("discord-player");
 var index_1 = require("../index");
 var bot_1 = __importDefault(require("./bot"));
+var tempTimeOut = {};
 var discord = new discord_player_1.Player(index_1.client, {
     autoRegisterExtractor: true,
     ytdlOptions: {
@@ -14,13 +15,20 @@ var discord = new discord_player_1.Player(index_1.client, {
     },
     connectionTimeout: bot_1.default.bot.timeout,
 });
+var clearExitRoom = function (queue) {
+    return tempTimeOut[queue.guild.id]
+        ? clearTimeout(tempTimeOut[queue.guild.id])
+        : null;
+};
 discord.on("queueEnd", function (queue) {
-    setTimeout(function () {
+    var exitRoom = setTimeout(function () {
         if (!queue.nowPlaying())
             queue.destroy(true);
     }, bot_1.default.bot.timeout);
+    tempTimeOut[queue.guild.id] = exitRoom;
 });
 discord.on("trackStart", function (queue, track) {
+    clearExitRoom(queue);
     return queue.metadata.channel.send({
         embeds: [
             {

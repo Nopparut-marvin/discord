@@ -1,7 +1,8 @@
 import { hyperlink } from "@discordjs/builders";
-import { Player } from "discord-player";
+import { Player, Queue } from "discord-player";
 import { client } from "../index";
 import config from "./bot";
+const tempTimeOut: { [key: string]: NodeJS.Timeout } = {};
 const discord = new Player(client, {
 	autoRegisterExtractor: true,
 	ytdlOptions: {
@@ -9,12 +10,19 @@ const discord = new Player(client, {
 	},
 	connectionTimeout: config.bot.timeout,
 });
+const clearExitRoom = (queue: Queue<unknown>) => {
+	return tempTimeOut[queue.guild.id]
+		? clearTimeout(tempTimeOut[queue.guild.id])
+		: null;
+};
 discord.on("queueEnd", (queue) => {
-	setTimeout(() => {
+	const exitRoom = setTimeout(() => {
 		if (!queue.nowPlaying()) queue.destroy(true);
 	}, config.bot.timeout);
+	tempTimeOut[queue.guild.id] = exitRoom;
 });
 discord.on("trackStart", (queue: any, track: any) => {
+	clearExitRoom(queue);
 	return queue.metadata.channel.send({
 		embeds: [
 			{

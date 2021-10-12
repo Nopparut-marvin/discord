@@ -8,7 +8,6 @@ const discord = new Player(client, {
 	ytdlOptions: {
 		highWaterMark: 1 << 25,
 	},
-	connectionTimeout: config.bot.timeout,
 });
 const clearExitRoom = (queue: Queue<unknown>) => {
 	return tempTimeOut[queue.guild.id]

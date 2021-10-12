@@ -4,8 +4,8 @@ import { client } from "../index";
 import config from "./bot";
 const tempTimeOut: { [key: string]: NodeJS.Timeout } = {};
 const discord = new Player(client, {
-	autoRegisterExtractor: true,
 	ytdlOptions: {
+		quality: "highestaudio",
 		highWaterMark: 1 << 25,
 	},
 });

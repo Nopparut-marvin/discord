@@ -19,7 +19,7 @@ client.once("ready", () => {
 		// The name of the local folder for your command files
 		commandsDir: path.join(__dirname, "commands"),
 		// Allow importing of .ts files if you are using ts-node
-		// typeScript: true,
+		typeScript: true,
 		mongoUri: config.mongo.monroUri,
 	})
 		.setDefaultPrefix(config.discord.prefix)
